@@ -6,10 +6,6 @@
 const int LEFT_RELAY_MODULE_PIN = 1;   //左のrelayModuleピン
 const int RIGHT_RELAY_MODULE_PIN = 2;  //右のrelayModuleピン
 
-
-// int prev_x = -1;
-// int prev_y = -1;
-
 static m5::touch_state_t prev_state;    //タッチ状態管理用変数
 
 long oldUseValue = 0;   //ダイヤルの管理用変数
@@ -35,11 +31,8 @@ const int TOUCH_BEGIN = 3;  //タッチ開始イベント
 
 bool outSeasoning(int usingSeasoning,long useValue){
     // 調味料を出す処理
-    M5Dial.Display.fillRect(0, 0, M5Dial.Display.width(),
-                                    M5Dial.Display.height(), BLACK);
-                        M5Dial.Display.drawString("executing",
-                                    M5Dial.Display.width() / 2,
-                                    M5Dial.Display.height() / 2);
+    M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_executing.jpg", 0, 0);
+
     if (usingSeasoning == LEFT_SEASONING){
         if(useValue >= 1 && useValue <= 2){
             Serial.println("LEFT_RELAY_MODULE ON");
@@ -82,79 +75,25 @@ bool outSeasoning(int usingSeasoning,long useValue){
 void drawUseRelayModule(long useValue){
     // M5Dial.Speaker.tone(8000, 20);
     // M5Dial.Display.clear();
-    // 画像にするときに消す！
-    M5Dial.Display.fillRect(0, 0,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, BLACK);
-    M5Dial.Display.drawString("back",
-                M5Dial.Display.width() / 2,
-                M5Dial.Display.height() / 3 - 30);
-    M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 2,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, BLUE);
-    M5Dial.Display.drawString("execute",
-                M5Dial.Display.width() / 2,
-                (M5Dial.Display.height() / 3) * 2 + 30);
-
 
 
     // ここに画像を張り付ける！
     if(useValue == 0){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tsp:" + String(useValue * -1),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_0.jpg", 0, 0);
     }else if (useValue == 1){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tsp1.jpg", 0, 0);
     }else if (useValue == 2){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tsp2.jpg", 0, 0);
     }else if (useValue == 3){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tbsp1.jpg", 0, 0);
     }else if (useValue == 4){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tbsp2.jpg", 0, 0);
     }else if (useValue == 5){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tbsp3.jpg", 0, 0);
     }else if (useValue == 6){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tbsp4.jpg", 0, 0);
     }else if (useValue == 7){
-        M5Dial.Display.fillRect(0, (M5Dial.Display.height() / 3) * 1,
-                            M5Dial.Display.width(),
-                            M5Dial.Display.height() / 3, RED);
-        M5Dial.Display.drawString("tbsp:" + String(useValue),
-                            M5Dial.Display.width() / 2,
-                            M5Dial.Display.height() / 2);
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_tbsp5.jpg", 0, 0);
     }
 }
 
@@ -182,7 +121,11 @@ void setup(void) {
 
     SPIFFS.begin();
 
-    M5.Lcd.drawBmpFile(SPIFFS, "/Cheifoon_title.bmp", 0, 0);
+    M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_title.jpg", 0, 0);
+    M5_UPDATE();
+    delay(3000);
+    M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_select.jpg", 0, 0);
+    M5_UPDATE();
 }
 
 void loop(void) {
@@ -192,21 +135,14 @@ void loop(void) {
     
     auto t = M5Dial.Touch.getDetail();
 
+
     if(!useFlag){
         if (prev_state != t.state) {
             prev_state                                  = t.state;
-            M5Dial.Display.fillRect(0, 0, M5Dial.Display.width(),
-                                    M5Dial.Display.height() / 2, BLACK);
-            M5Dial.Display.drawString("left seasoning",
-                                    M5Dial.Display.width() / 2,
-                                    M5Dial.Display.height() / 2 - 40);
-            M5Dial.Display.fillRect(0, M5Dial.Display.height() / 2, M5Dial.Display.width(),
-                                    M5Dial.Display.height() / 2, RED);
-            M5Dial.Display.drawString("right seasoning",
-                                    M5Dial.Display.width() / 2,
-                                    M5Dial.Display.height() / 2 + 40);
+            M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_select.jpg", 0, 0);
+
             if(t.state == TOUCH){
-                if(t.y <= 120){
+                if(t.x >= 120){
                     Serial.println("left seasoning");
                     usingSeasoning = LEFT_SEASONING;
                 }else{
@@ -236,24 +172,13 @@ void loop(void) {
         if (prev_state != t.state) {
             prev_state                                  = t.state;
             if(t.state == TOUCH){
-                if(t.y <= 80){
+                if(t.y >= 180){
                     Serial.println("back event");
                     useFlag = false;
-                }else if (t.y >= 160){
+                }else if (t.y <= 50){
                     if(newUseValue != 0){
                         if(outSeasoning(usingSeasoning,newUseValue)){
-                            M5Dial.Display.fillRect(0, 0, M5Dial.Display.width(),
-                                        M5Dial.Display.height(), BLACK);
-                            M5Dial.Display.drawString("complete",
-                                        M5Dial.Display.width() / 2,
-                                        M5Dial.Display.height() / 2);
-                            delay(1500);
-                        }else{
-                            M5Dial.Display.fillRect(0, 0, M5Dial.Display.width(),
-                                        M5Dial.Display.height(), BLACK);
-                            M5Dial.Display.drawString("execute cancel",
-                                        M5Dial.Display.width() / 2,
-                                        M5Dial.Display.height() / 2);
+                            M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_completed.jpg", 0, 0);
                             delay(1500);
                         }
                         useFlag = false;
@@ -268,15 +193,4 @@ void loop(void) {
         }
     }
     
-    // if (prev_x != t.x || prev_y != t.y) {
-    //     M5Dial.Display.fillRect(0, M5Dial.Display.height() / 2,
-    //                             M5Dial.Display.width(),
-    //                             M5Dial.Display.height() / 2, BLACK);
-    //     M5Dial.Display.drawString(
-    //         "X:" + String(t.x) + " / " + "Y:" + String(t.y),
-    //         M5Dial.Display.width() / 2, M5Dial.Display.height() / 2 + 30);
-    //     prev_x = t.x;
-    //     prev_y = t.y;
-    //     M5Dial.Display.drawPixel(prev_x, prev_y);
-    // }
 }
