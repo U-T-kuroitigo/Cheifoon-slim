@@ -114,16 +114,24 @@ void setup(void) {
     pinMode(RIGHT_RELAY_MODULE_PIN, OUTPUT);
     digitalWrite(RIGHT_RELAY_MODULE_PIN, LOW);
 
-    // pinMode(LEFT_RELAY_MODULE_PIN, OUTPUT);
-    // pinMode(RIGHT_RELAY_MODULE_PIN, OUTPUT);
-    // digitalWrite(LEFT_RELAY_MODULE_PIN, LOW);
-    // digitalWrite(RIGHT_RELAY_MODULE_PIN, LOW);
 
     SPIFFS.begin();
 
     M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_title.jpg", 0, 0);
     M5_UPDATE();
-    delay(3000);
+
+    while (true){
+        M5_UPDATE();
+        auto t = M5Dial.Touch.getDetail();
+        if (prev_state != t.state) {
+            prev_state                                  = t.state;
+            if(t.state == TOUCH){
+                break;
+            }
+        }
+    }
+    
+
     M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_select.jpg", 0, 0);
     M5_UPDATE();
 }
