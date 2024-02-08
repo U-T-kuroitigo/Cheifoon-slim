@@ -18,6 +18,7 @@ const int RIGHT_SEASONING = 1;  // 右の調味料を使用するとき用の定
 int usingSeasoning = -99;  // どちらの調味料を使用するかの管理用変数
 
 bool useFlag = false;  // 調味料を使用するかどうか
+bool titleFlag = true;  // タイトル判定フラグ
 
 // タッチ状態の種類と合致する定数
 static constexpr const char* STATE_NAME[16] = {
@@ -113,22 +114,6 @@ void setup(void) {
 
     SPIFFS.begin();
 
-    M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_title.jpg", 0, 0);
-    M5_UPDATE();
-
-    while (true) {
-        M5_UPDATE();
-        auto t = M5Dial.Touch.getDetail();
-        if (prev_state != t.state) {
-            prev_state = t.state;
-            if (t.state == TOUCH) {
-                break;
-            }
-        }
-    }
-
-    M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_select.jpg", 0, 0);
-    M5_UPDATE();
 }
 
 void loop(void) {
@@ -137,6 +122,27 @@ void loop(void) {
     M5Dial.update();
 
     auto t = M5Dial.Touch.getDetail();
+
+    if (titleFlag){
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_title.jpg", 0, 0);
+        M5_UPDATE();
+        while (true) {
+            M5_UPDATE();
+            auto t = M5Dial.Touch.getDetail();
+            if (prev_state != t.state) {
+                prev_state = t.state;
+                if (t.state == TOUCH) {
+                    break;
+                }
+            }
+        }
+        titleFlag = false;
+        useFlag = false;
+        M5.Lcd.drawJpgFile(SPIFFS, "/Cheifoon_select.jpg", 0, 0);
+        M5_UPDATE();
+    }
+    
+
 
     if (!useFlag) {
         if (prev_state != t.state) {
@@ -181,7 +187,7 @@ void loop(void) {
                     if (newUseValue != 0) {
                         if (outSeasoning(usingSeasoning, newUseValue)) {
                             M5.Lcd.drawJpgFile(SPIFFS,
-                                               "/Cheifoon_completed.jpg", 0, 0);
+                                            "/Cheifoon_completed.jpg", 0, 0);
                             delay(1500);
                         }
                         useFlag = false;
@@ -191,8 +197,8 @@ void loop(void) {
                 }
             }
         }
-        if (M5Dial.BtnA.pressedFor(1500)) {
-            M5Dial.Encoder.write(0);
-        }
+    }
+    if (M5Dial.BtnA.pressedFor(1500)) {
+        titleFlag = true;
     }
 }
