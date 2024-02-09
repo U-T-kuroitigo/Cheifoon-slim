@@ -10,8 +10,8 @@ static m5::touch_state_t prev_state;  // タッチ状態管理用変数
 
 long oldUseValue = 0;  // ダイヤルの管理用変数
 
-const double TSP = 1.33;  // 小さじの単位秒数
-const double TBSP = 4;    // 大さじの単位秒数
+const double TSP = 1.666;  // 小さじの単位秒数
+const double TBSP = 5;    // 大さじの単位秒数
 
 const int LEFT_SEASONING = 0;  // 左の調味料を使用するとき用の定数
 const int RIGHT_SEASONING = 1;  // 右の調味料を使用するとき用の定数
